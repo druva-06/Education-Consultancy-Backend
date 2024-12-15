@@ -1,7 +1,10 @@
 package com.consultancy.education.helper;
 
+import com.consultancy.education.enums.GraduationLevel;
 import com.consultancy.education.exception.ExcelException;
 import com.consultancy.education.model.College;
+import com.consultancy.education.model.Course;
+import com.consultancy.education.utils.BasicValidations;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -21,7 +24,7 @@ public class ExcelHelper {
         return contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     }
 
-    public static List<College> covertExcelIntoList(InputStream inputStream) throws Exception {
+    public static List<College> convertCollegeExcelIntoList(InputStream inputStream) throws Exception {
         List<College> collegeArrayList = new ArrayList<>();
 
         try{
@@ -37,6 +40,7 @@ public class ExcelHelper {
                 }
                 row++;
                 College college = getCollege(collegeRow);
+                if(college.getName() == null) break;
                 collegeArrayList.add(college);
             }
         }
@@ -47,79 +51,145 @@ public class ExcelHelper {
         return collegeArrayList;
     }
 
+    public static List<Course> convertCourseExcelIntoList(InputStream inputStream) throws Exception {
+        List<Course> courseArrayList = new ArrayList<>();
+
+        try{
+            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+            XSSFSheet courseSheet = workbook.getSheet("courses");
+            Iterator<Row> courses = courseSheet.iterator();
+            int row = 0;
+            while(courses.hasNext()){
+                Row courseRow = courses.next();
+                if(row == 0){
+                    row++;
+                    continue;
+                }
+                row++;
+                Course course = getCourse(courseRow);
+                if(course.getName() == null) break;
+                courseArrayList.add(course);
+            }
+        }
+        catch (Exception e){
+            throw new ExcelException(e.getMessage());
+        }
+
+        return courseArrayList;
+    }
+
+    private static Course getCourse(Row courseRow) {
+        BasicValidations basicValidations = new BasicValidations();
+        int col = 0;
+        Course course = new Course();
+        for (Cell cell : courseRow) {
+            switch (col){
+                case 0:
+                    course.setName(basicValidations.validateString(cell));
+                    break;
+                case 1:
+                    course.setDepartment(basicValidations.validateString(cell));
+                    break;
+                case 2:
+                    course.setGraduationLevel(GraduationLevel.valueOf(basicValidations.validateString(cell)));
+                    break;
+                case 3:
+                    course.setSpecialization(basicValidations.validateString(cell));
+                    break;
+                case 4:
+                    course.setDescription(basicValidations.validateString(cell));
+                    break;
+                default:
+                    break;
+            }
+            col++;
+        }
+        return course;
+    }
+
     private static College getCollege(Row collegeRow) {
+        BasicValidations basicValidations = new BasicValidations();
         int col = 0;
         College college = new College();
         for (Cell cell : collegeRow) {
             switch (col){
                 case 0:
-                    college.setName(cell.getStringCellValue());
+                    college.setName(basicValidations.validateString(cell));
                     break;
                 case 1:
-                    college.setCampus(cell.getStringCellValue());
+                    college.setCampus(basicValidations.validateString(cell));
                     break;
                 case 2:
-                    college.setWebsiteUrl(cell.getStringCellValue());
+                    college.setWebsiteUrl(basicValidations.validateString(cell));
                     break;
                 case 3:
-                    college.setCollegeLogo(cell.getStringCellValue());
+                    college.setCollegeLogo(basicValidations.validateString(cell));
                     break;
                 case 4:
-                    college.setCountry(cell.getStringCellValue());
+                    college.setCountry(basicValidations.validateString(cell));
                     break;
                 case 5:
-                    college.setEstablishedYear((int) cell.getNumericCellValue());
+                    college.setEstablishedYear(basicValidations.validateInteger(cell));
                     break;
                 case 6:
-                    college.setRanking((int) cell.getNumericCellValue());
+                    college.setRanking(basicValidations.validateInteger(cell));
                     break;
                 case 7:
-                    college.setStudyLevel(cell.getStringCellValue());
+                    college.setStudyLevel(basicValidations.validateString(cell));
                     break;
                 case 8:
-                    college.setIeltsMinScore(cell.getNumericCellValue());
+                    college.setIeltsMinScore(basicValidations.validateDouble(cell));
                     break;
                 case 9:
-                    college.setToeflMinScore(cell.getNumericCellValue());
+                    college.setToeflMinScore(basicValidations.validateDouble(cell));
                     break;
                 case 10:
-                    college.setPteMinScore(cell.getNumericCellValue());
+                    college.setPteMinScore(basicValidations.validateDouble(cell));
                     break;
                 case 11:
-                    college.setGreMinScore(cell.getNumericCellValue());
+                    college.setGreMinScore(basicValidations.validateDouble(cell));
                     break;
                 case 12:
-                    college.setGmatMinScore(cell.getNumericCellValue());
+                    college.setGmatMinScore(basicValidations.validateDouble(cell));
                     break;
                 case 13:
-                    college.setMin10thScore(cell.getNumericCellValue());
+                    college.setSatMinScore(basicValidations.validateDouble(cell));
                     break;
                 case 14:
-                    college.setMinInterScore(cell.getNumericCellValue());
+                    college.setCatMinScore(basicValidations.validateDouble(cell));
                     break;
                 case 15:
-                    college.setMinGraduationScore(cell.getNumericCellValue());
+                    college.setDetMinScore(basicValidations.validateDouble(cell));
                     break;
                 case 16:
-                    college.setScholarshipEligible(cell.getStringCellValue());
+                    college.setMin10thScore(basicValidations.validateDouble(cell));
                     break;
                 case 17:
-                    college.setScholarshipDetails(cell.getStringCellValue());
+                    college.setMinInterScore(basicValidations.validateDouble(cell));
                     break;
                 case 18:
-                    college.setBacklogAcceptanceRange((int) cell.getNumericCellValue());
+                    college.setMinGraduationScore(basicValidations.validateDouble(cell));
                     break;
                 case 19:
-                    college.setRemarks(cell.getStringCellValue());
+                    college.setScholarshipEligible(basicValidations.validateString(cell));
                     break;
                 case 20:
-                    college.setDescription(cell.getStringCellValue());
+                    college.setScholarshipDetails(basicValidations.validateString(cell));
                     break;
                 case 21:
-                    college.setCampusGalleryVideoLink(cell.getStringCellValue());
+                    college.setBacklogAcceptanceRange(basicValidations.validateInteger(cell));
                     break;
                 case 22:
-                    college.setEligibilityCriteria(cell.getStringCellValue());
+                    college.setRemarks(basicValidations.validateString(cell));
+                    break;
+                case 23:
+                    college.setDescription(basicValidations.validateString(cell));
+                    break;
+                case 24:
+                    college.setCampusGalleryVideoLink(basicValidations.validateString(cell));
+                    break;
+                case 25:
+                    college.setEligibilityCriteria(basicValidations.validateString(cell));
                     break;
                 default:
                     break;

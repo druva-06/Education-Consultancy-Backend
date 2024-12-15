@@ -35,15 +35,26 @@ public class CollegeServiceImpl implements CollegeService {
     @Override
     public String bulkCollegesUpload(MultipartFile file) {
         int collegeCount = 0;
+        int updatedCount = 0;
         try{
-            List<College> collegeList = ExcelHelper.covertExcelIntoList(file.getInputStream());
+            List<College> collegeList = ExcelHelper.convertCollegeExcelIntoList(file.getInputStream());
             collegeCount = collegeList.size();
-            collegeRepository.saveAll(collegeList);
+            for (College college : collegeList) {
+                College existingCollege =  collegeRepository.findByNameAndCampusAndCountry(college.getName(),  college.getCampus(), college.getCountry());
+                if(existingCollege != null){
+                    college.setId(existingCollege.getId());
+                    college.setAddress(existingCollege.getAddress());
+                    college.setCollegeCourses(existingCollege.getCollegeCourses());
+                    college.setSeo(existingCollege.getSeo());
+                    updatedCount++;
+                }
+                collegeRepository.save(college);
+            }
         }
         catch (Exception e){
             throw new DatabaseException(e.getMessage());
         }
-        return "Total "+ collegeCount + " Colleges data uploaded successfully";
+        return "Created College Count : " + (collegeCount - updatedCount) + " & Updated College Count : " + updatedCount;
     }
 
     @Override

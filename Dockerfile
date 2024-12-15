@@ -1,9 +1,6 @@
+# Use an official JDK as the base image
 FROM openjdk:17
 
-ARG JAR_FILE=target/*jar
+VOLUME /tmp
 
-COPY ${JAR_FILE} education.jar
-
-ENTRYPOINT ["java", "-jar", "/education.jar"]
-
-EXPOSE 8080
+ADD target/

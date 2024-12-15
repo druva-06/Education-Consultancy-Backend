@@ -22,7 +22,7 @@ public class College {
     @Column(nullable = false)
     String name;
 
-    @Column(nullable = false)
+    @Column(length = 500, nullable = false)
     String campus;
 
     @Column(name = "website_url")
@@ -34,13 +34,13 @@ public class College {
     @Column(name = "country")
     String country;
 
-    @Column(name = "established_year", nullable = false)
+    @Column(name = "established_year")
     Integer establishedYear;
 
     @Column(name = "ranking")
     Integer ranking;
 
-    @Column(name = "study_level", nullable = false)
+    @Column(name = "study_level")
     String studyLevel;
 
     @Column(name = "ielts_min_score")
@@ -58,6 +58,15 @@ public class College {
     @Column(name = "gmat_min_score")
     Double gmatMinScore;
 
+    @Column(name = "sat_min_score")
+    Double satMinScore;
+
+    @Column(name = "cat_min_score")
+    Double catMinScore;
+
+    @Column(name = "det_min_score")
+    Double detMinScore;
+
     @Column(name = "min_10th_score")
     Double min10thScore;
 
@@ -70,13 +79,13 @@ public class College {
     @Column(name = "scholarship_eligible")
     String scholarshipEligible;
 
-    @Column(name = "scholarship_details")
+    @Column(length = 3000, name = "scholarship_details")
     String scholarshipDetails;
 
     @Column(name = "backlog_acceptance_range")
     Integer backlogAcceptanceRange;
 
-    @Column(name = "remarks")
+    @Column(length = 3000, name = "remarks")
     String remarks;
 
     @Column(name = "description")
@@ -85,7 +94,7 @@ public class College {
     @Column(name = "campus_gallery_video_link")
     String campusGalleryVideoLink;
 
-    @Column(name = "eligibility_criteria")
+    @Column(length = 3000, name = "eligibility_criteria")
     String eligibilityCriteria;
 
     @Column(name = "created_at", nullable = false, updatable = false)

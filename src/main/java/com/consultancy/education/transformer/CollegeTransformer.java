@@ -23,6 +23,9 @@ public class CollegeTransformer {
                 .pteMinScore(collegeRequestDto.getPteMinScore())
                 .greMinScore(collegeRequestDto.getGreMinScore())
                 .gmatMinScore(collegeRequestDto.getGmatMinScore())
+                .satMinScore(collegeRequestDto.getSatMinScore())
+                .catMinScore(collegeRequestDto.getCatMinScore())
+                .detMinScore(collegeRequestDto.getDetMinScore())
                 .min10thScore(collegeRequestDto.getMin10thScore())
                 .minInterScore(collegeRequestDto.getMinInterScore())
                 .minGraduationScore(collegeRequestDto.getMinGraduationScore())
@@ -50,6 +53,9 @@ public class CollegeTransformer {
                 .pteMinScore(college.getPteMinScore())
                 .greMinScore(college.getGreMinScore())
                 .gmatMinScore(college.getGmatMinScore())
+                .satMinScore(college.getSatMinScore())
+                .catMinScore(college.getCatMinScore())
+                .detMinScore(college.getDetMinScore())
                 .min10thScore(college.getMin10thScore())
                 .minInterScore(college.getMinInterScore())
                 .minGraduationScore(college.getMinGraduationScore())
@@ -91,6 +97,9 @@ public class CollegeTransformer {
         existingCollege.setPteMinScore(collegeRequestDto.getPteMinScore());
         existingCollege.setGreMinScore(collegeRequestDto.getGreMinScore());
         existingCollege.setGmatMinScore(collegeRequestDto.getGmatMinScore());
+        existingCollege.setSatMinScore(collegeRequestDto.getSatMinScore());
+        existingCollege.setCatMinScore(collegeRequestDto.getCatMinScore());
+        existingCollege.setDetMinScore(collegeRequestDto.getDetMinScore());
         existingCollege.setMin10thScore(collegeRequestDto.getMin10thScore());
         existingCollege.setMinInterScore(collegeRequestDto.getMinInterScore());
         existingCollege.setMinGraduationScore(collegeRequestDto.getMinGraduationScore());

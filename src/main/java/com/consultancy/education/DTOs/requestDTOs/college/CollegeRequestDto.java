@@ -53,6 +53,15 @@ public class CollegeRequestDto {
     Double gmatMinScore;
 
     @Min(value = 0, message = "Score must be a positive value")
+    Double satMinScore;
+
+    @Min(value = 0, message = "Score must be a positive value")
+    Double catMinScore;
+
+    @Min(value = 0, message = "Score must be a positive value")
+    Double detMinScore;
+
+    @Min(value = 0, message = "Score must be a positive value")
     Double min10thScore;
 
     @Min(value = 0, message = "Score must be a positive value")

@@ -16,4 +16,6 @@ public interface CollegeRepository extends JpaRepository<College, Long> {
     List<College> findAllByOrderByNameAsc();
 
     List<College> findAllByOrderByNameDesc();
+
+    College findByNameAndCampusAndCountry(String name, String campus, String country);
 }
