@@ -3,13 +3,18 @@ package com.consultancy.education.service.impl;
 import com.consultancy.education.DTOs.requestDTOs.course.CourseRequestDto;
 import com.consultancy.education.DTOs.responseDTOs.course.CourseResponseDto;
 import com.consultancy.education.exception.AlreadyExistException;
+import com.consultancy.education.exception.DatabaseException;
 import com.consultancy.education.exception.NotFoundException;
+import com.consultancy.education.helper.ExcelHelper;
+import com.consultancy.education.model.College;
 import com.consultancy.education.model.Course;
 import com.consultancy.education.repository.CourseRepository;
 import com.consultancy.education.service.CourseService;
 import com.consultancy.education.transformer.CourseTransformer;
+import com.consultancy.education.utils.PatternConvert;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,12 +94,36 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseResponseDto> getCourseByName(String name) {
-        List<Course> courses = courseRepository.findByNameContainingIgnoreCase(name, PageRequest.of(0, 5));
+        List<Course> courses = courseRepository.searchByNameOrDepartment(PatternConvert.jumbleSearch(name), PageRequest.of(0, 5));
         if (!courses.isEmpty()) {
             return CourseTransformer.toResDTO(courses);
         }
         else{
             throw new NotFoundException("College not found");
         }
+    }
+
+    @Override
+    public String bulkCoursesUpload(MultipartFile file) {
+        int courseCount;
+        int updatedCount = 0;
+        try{
+            List<Course> courseList = ExcelHelper.convertCourseExcelIntoList(file.getInputStream());
+            courseCount = courseList.size();
+            for (Course course : courseList) {
+                Course existingCourse =  courseRepository.findByNameAndDepartmentAndGraduationLevel(course.getName(),  course.getDepartment(), course.getGraduationLevel());
+                if(existingCourse != null){
+                    course.setId(existingCourse.getId());
+                    course.setCollegeCourses(existingCourse.getCollegeCourses());
+                    updatedCount++;
+                }
+                courseRepository.save(course);
+            }
+        }
+        catch (Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+        return "Created Courses Count : " + (courseCount - updatedCount) + " & Updated Courses Count : " + updatedCount;
+
     }
 }

@@ -17,4 +17,9 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     Course findDuplicate(@Param("name") String name, @Param("department") String department, @Param("graduationLevel") GraduationLevel graduationLevel, @Param("specialization") String specialization);
 
     List<Course> findByNameContainingIgnoreCase(String name, PageRequest of);
+
+    @Query("SELECT e FROM Course e WHERE LOWER(CONCAT(e.name, e.department)) LIKE LOWER(:input)")
+    List<Course> searchByNameOrDepartment(@Param("input") String input, PageRequest of);
+
+    Course findByNameAndDepartmentAndGraduationLevel(String name, String department, GraduationLevel graduationLevel);
 }

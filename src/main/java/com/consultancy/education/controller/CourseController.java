@@ -4,6 +4,7 @@ import com.consultancy.education.DTOs.requestDTOs.course.CourseRequestDto;
 import com.consultancy.education.DTOs.responseDTOs.course.CourseResponseDto;
 import com.consultancy.education.exception.AlreadyExistException;
 import com.consultancy.education.exception.NotFoundException;
+import com.consultancy.education.helper.ExcelHelper;
 import com.consultancy.education.response.ApiFailureResponse;
 import com.consultancy.education.response.ApiSuccessResponse;
 import com.consultancy.education.service.CourseService;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,19 @@ public class CourseController {
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiFailureResponse<>(new ArrayList<>(), e.getMessage(), 500));
         }
+    }
+
+    @PostMapping("/bulkCourseUpload")
+    public ResponseEntity<?> bulkCourseUpload(@RequestParam("file") MultipartFile file){
+        if(ExcelHelper.checkExcelFormat(file)) {
+            try{
+                return ResponseEntity.status(HttpStatus.CREATED).body(new ApiSuccessResponse<>(courseService.bulkCoursesUpload(file), "Courses uploaded successfully", 201));
+            }
+            catch (Exception e){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiFailureResponse<>(new ArrayList<>(), e.getMessage(), 500));
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiFailureResponse<>(new ArrayList<>(),"Incorrect excel format", 400));
     }
 
     @GetMapping("/getAll")
