@@ -23,22 +23,25 @@ public class CollegeCourse {
     Long id;
 
     @Column(name = "intake_month", nullable = false)
-    String intakeMonth;
+    Integer intakeMonth;
 
-    @Column(name = "tuition_fee", nullable = false)
+    @Column(name = "intake_year", nullable = false)
+    Integer intakeYear;
+
+    @Column(name = "tuition_fee")
     Double tuitionFee;
 
-    @Column(name = "application_fee", nullable = false)
+    @Column(name = "application_fee")
     Double applicationFee;
 
     @Column(name = "duration", nullable = false)
     String duration;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @Column(name = "application_deadline", nullable = false)
+    @Column(name = "application_deadline")
     LocalDate applicationDeadline;
 
-    @Column(name = "max_students", nullable = false)
+    @Column(name = "max_students")
     Integer maxStudents;
 
     @Enumerated(EnumType.STRING)

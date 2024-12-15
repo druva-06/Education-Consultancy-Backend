@@ -18,9 +18,11 @@ import java.time.LocalDateTime;
 @Builder
 public class CollegeCourseRequestDto {
 
-    @NotBlank(message = "Intake month cannot be blank")
-    @Pattern(regexp = "^(0[1-9]|1[0-2])$", message = "Intake month must be a valid month number (01-12)")
-    String intakeMonth;
+    @NotNull(message = "Intake month cannot be blank")
+    Integer intakeMonth;
+
+    @NotNull(message = "Intake year cannot be blank")
+    Integer intakeYear;
 
     @NotNull(message = "Tuition fee cannot be null")
     @PositiveOrZero(message = "Tuition fee must be zero or positive")

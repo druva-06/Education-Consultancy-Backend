@@ -28,9 +28,9 @@ public class CollegeCourseController {
     @PostMapping("/add")
     public ResponseEntity<?> addCollegeCourse(@RequestBody @Valid CollegeCourseRequestDto collegeCourseRequestDto, BindingResult bindingResult,
                                               @RequestParam Long collegeId, @RequestParam Long courseId) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiFailureResponse<>(ToMap.bindingResultToMap(bindingResult), "Validation failed", 400));
-        }
+//        if (bindingResult.hasErrors()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiFailureResponse<>(ToMap.bindingResultToMap(bindingResult), "Validation failed", 400));
+//        }
         try{
             CollegeCourseResponseDto collegeCourseResponseDto = collegeCourseService.addCollegeCourse(collegeCourseRequestDto, collegeId, courseId);
             return ResponseEntity.status(HttpStatus.CREATED).body(new ApiSuccessResponse<>(collegeCourseResponseDto, "College course added successfully", 201));
