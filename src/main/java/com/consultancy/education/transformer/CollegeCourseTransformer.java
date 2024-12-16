@@ -22,9 +22,11 @@ public class CollegeCourseTransformer {
                 .build();
     }
 
-    public static CollegeCourseResponseDto toResDto(CollegeCourse collegeCourse, Long collegeCourseId) {
+    public static CollegeCourseResponseDto toResDto(CollegeCourse collegeCourse, Long collegeCourseId, String collegeName, String courseName) {
         return CollegeCourseResponseDto.builder()
                 .collegeCourseId(collegeCourseId)
+                .collegeName(collegeName)
+                .courseName(courseName)
                 .intakeMonth(collegeCourse.getIntakeMonth())
                 .intakeYear(collegeCourse.getIntakeYear())
                 .tuitionFee(collegeCourse.getTuitionFee())
@@ -39,7 +41,7 @@ public class CollegeCourseTransformer {
     public static List<CollegeCourseResponseDto> toResDto(List<CollegeCourse> collegeCourses) {
         List<CollegeCourseResponseDto> collegeCourseResponseDtos = new ArrayList<>();
         for (CollegeCourse collegeCourse : collegeCourses) {
-            collegeCourseResponseDtos.add(toResDto(collegeCourse, collegeCourse.getId()));
+            collegeCourseResponseDtos.add(toResDto(collegeCourse, collegeCourse.getId(), collegeCourse.getCollege().getName(), collegeCourse.getCourse().getName()));
         }
         return collegeCourseResponseDtos;
     }

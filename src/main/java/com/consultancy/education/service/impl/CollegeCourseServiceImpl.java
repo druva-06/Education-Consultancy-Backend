@@ -50,7 +50,7 @@ public class CollegeCourseServiceImpl implements CollegeCourseService {
 
         collegeCourse = collegeCourseRepository.save(collegeCourse);
 
-        return CollegeCourseTransformer.toResDto(collegeCourse, collegeCourse.getId());
+        return CollegeCourseTransformer.toResDto(collegeCourse, collegeCourse.getId(), college.getName(), course.getName());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CollegeCourseServiceImpl implements CollegeCourseService {
         CollegeCourse collegeCourse = collegeCourseRepository.findById(collegeCourseId).get();
         CollegeCourseTransformer.updateCollegeCourse(collegeCourse, collegeCourseRequestDto);
         collegeCourse = collegeCourseRepository.save(collegeCourse);
-        return CollegeCourseTransformer.toResDto(collegeCourse, collegeCourseId);
+        return CollegeCourseTransformer.toResDto(collegeCourse, collegeCourseId, collegeCourse.getCollege().getName(), collegeCourse.getCourse().getName());
     }
 
     @Override
@@ -73,7 +73,9 @@ public class CollegeCourseServiceImpl implements CollegeCourseService {
             throw new NotFoundException("College Course not found");
         }
         CollegeCourse collegeCourse = collegeCourseRepository.findById(collegeCourseId).get();
+        String collegeName = collegeCourse.getCollege().getName();
+        String courseName = collegeCourse.getCourse().getName();
         collegeCourseRepository.delete(collegeCourse);
-        return CollegeCourseTransformer.toResDto(collegeCourse, collegeCourseId);
+        return CollegeCourseTransformer.toResDto(collegeCourse, collegeCourseId, collegeName, courseName);
     }
 }

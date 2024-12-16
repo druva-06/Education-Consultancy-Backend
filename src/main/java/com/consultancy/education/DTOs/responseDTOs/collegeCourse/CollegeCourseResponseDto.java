@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 public class CollegeCourseResponseDto {
 
     Long collegeCourseId;
+    String collegeName;
+    String courseName;
     Integer intakeMonth;
     Integer intakeYear;
     Double tuitionFee;

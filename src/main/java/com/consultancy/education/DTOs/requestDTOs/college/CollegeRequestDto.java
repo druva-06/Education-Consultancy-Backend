@@ -21,6 +21,9 @@ public class CollegeRequestDto {
     @NotBlank(message = "Campus name is required")
     String campus;
 
+    @NotBlank(message = "Campus code is required")
+    String campusCode;
+
     @Pattern(regexp = "^(http|https)://.*$", message = "Invalid website URL")
     String websiteUrl;
 

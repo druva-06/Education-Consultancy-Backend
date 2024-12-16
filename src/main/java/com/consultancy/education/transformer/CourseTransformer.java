@@ -21,7 +21,7 @@ public class CourseTransformer {
 
     public static CourseResponseDto toResDTO(Course course) {
         return CourseResponseDto.builder()
-                .courseId(course.getId())
+                .id(course.getId())
                 .name(course.getName())
                 .department(course.getDepartment())
                 .graduationLevel(course.getGraduationLevel())

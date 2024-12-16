@@ -25,6 +25,9 @@ public class College {
     @Column(length = 500, nullable = false)
     String campus;
 
+    @Column(name = "campus_code", nullable = false)
+    String campusCode;
+
     @Column(name = "website_url")
     String websiteUrl;
 

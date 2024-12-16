@@ -3,6 +3,7 @@ package com.consultancy.education.transformer;
 import com.consultancy.education.DTOs.requestDTOs.college.CollegeRequestDto;
 import com.consultancy.education.DTOs.responseDTOs.college.CollegeResponseDto;
 import com.consultancy.education.model.College;
+import com.consultancy.education.model.Seo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,10 @@ public class CollegeTransformer {
     public static College toEntity(CollegeRequestDto collegeRequestDto){
         return College.builder()
                 .name(collegeRequestDto.getName())
+                .campusCode(collegeRequestDto.getCampusCode())
                 .campus(collegeRequestDto.getCampus())
                 .websiteUrl(collegeRequestDto.getWebsiteUrl())
+                .country(collegeRequestDto.getCountry())
                 .collegeLogo(collegeRequestDto.getCollegeLogo())
                 .establishedYear(collegeRequestDto.getEstablishedYear())
                 .ranking(collegeRequestDto.getRanking())
@@ -43,11 +46,13 @@ public class CollegeTransformer {
         return CollegeRequestDto.builder()
                 .name(college.getName())
                 .campus(college.getCampus())
+                .campusCode(college.getCampusCode())
                 .websiteUrl(college.getWebsiteUrl())
                 .collegeLogo(college.getCollegeLogo())
                 .establishedYear(college.getEstablishedYear())
                 .ranking(college.getRanking())
                 .studyLevel(college.getStudyLevel())
+                .country(college.getCountry())
                 .ieltsMinScore(college.getIeltsMinScore())
                 .toeflMinScore(college.getToeflMinScore())
                 .pteMinScore(college.getPteMinScore())
@@ -73,6 +78,8 @@ public class CollegeTransformer {
         return CollegeResponseDto.builder()
                 .name(college.getName())
                 .id(college.getId())
+                .campus_code(college.getCampusCode())
+                .campus(college.getCampus())
                 .build();
     }
 
@@ -87,7 +94,9 @@ public class CollegeTransformer {
     public static void updateCollegeDetails(College existingCollege, CollegeRequestDto collegeRequestDto) {
         existingCollege.setName(collegeRequestDto.getName());
         existingCollege.setCampus(collegeRequestDto.getCampus());
+        existingCollege.setCampusCode(collegeRequestDto.getCampusCode());
         existingCollege.setWebsiteUrl(collegeRequestDto.getWebsiteUrl());
+        existingCollege.setCountry(collegeRequestDto.getCountry());
         existingCollege.setCollegeLogo(collegeRequestDto.getCollegeLogo());
         existingCollege.setEstablishedYear(collegeRequestDto.getEstablishedYear());
         existingCollege.setRanking(collegeRequestDto.getRanking());
@@ -110,5 +119,36 @@ public class CollegeTransformer {
         existingCollege.setDescription(collegeRequestDto.getDescription());
         existingCollege.setCampusGalleryVideoLink(collegeRequestDto.getCampusGalleryVideoLink());
         existingCollege.setEligibilityCriteria(collegeRequestDto.getEligibilityCriteria());
+    }
+
+    public static College reqDtoToReqDto(College college, String campus) {
+        return College.builder()
+                .name(college.getName())
+                .campus(campus)
+                .websiteUrl(college.getWebsiteUrl())
+                .collegeLogo(college.getCollegeLogo())
+                .country(college.getCountry())
+                .establishedYear(college.getEstablishedYear())
+                .ranking(college.getRanking())
+                .studyLevel(college.getStudyLevel())
+                .ieltsMinScore(college.getIeltsMinScore())
+                .toeflMinScore(college.getToeflMinScore())
+                .pteMinScore(college.getPteMinScore())
+                .greMinScore(college.getGreMinScore())
+                .gmatMinScore(college.getGmatMinScore())
+                .satMinScore(college.getSatMinScore())
+                .catMinScore(college.getCatMinScore())
+                .detMinScore(college.getDetMinScore())
+                .min10thScore(college.getMin10thScore())
+                .minInterScore(college.getMinInterScore())
+                .minGraduationScore(college.getMinGraduationScore())
+                .scholarshipEligible(college.getScholarshipEligible())
+                .scholarshipDetails(college.getScholarshipDetails())
+                .backlogAcceptanceRange(college.getBacklogAcceptanceRange())
+                .remarks(college.getRemarks())
+                .description(college.getDescription())
+                .campusGalleryVideoLink(college.getCampusGalleryVideoLink())
+                .eligibilityCriteria(college.getEligibilityCriteria())
+                .build();
     }
 }

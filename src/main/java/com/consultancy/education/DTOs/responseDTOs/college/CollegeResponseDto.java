@@ -12,4 +12,6 @@ import lombok.experimental.FieldDefaults;
 public class CollegeResponseDto {
     Long id;
     String name;
+    String campus;
+    String campus_code;
 }

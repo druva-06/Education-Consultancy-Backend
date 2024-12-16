@@ -176,4 +176,16 @@ public class CollegeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiFailureResponse<>(new ArrayList<>(),e.getMessage(), 500));
         }
     }
+
+    @GetMapping("updateInternalCollegeData")
+    public ResponseEntity<?> updateCollegeData(){
+        try{
+            String result = collegeService.updateInternalCollegeData();
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiSuccessResponse<>(result, "College campus updated successfully", 200));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiFailureResponse<>(new ArrayList<>(),e.getMessage(), 500));
+        }
+
+    }
 }

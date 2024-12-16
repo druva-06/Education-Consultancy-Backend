@@ -16,12 +16,14 @@ import com.consultancy.education.service.CollegeService;
 import com.consultancy.education.transformer.AddressTransformer;
 import com.consultancy.education.transformer.CollegeCourseTransformer;
 import com.consultancy.education.transformer.CollegeTransformer;
+import com.consultancy.education.utils.PatternConvert;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CollegeServiceImpl implements CollegeService {
@@ -40,9 +42,10 @@ public class CollegeServiceImpl implements CollegeService {
             List<College> collegeList = ExcelHelper.convertCollegeExcelIntoList(file.getInputStream());
             collegeCount = collegeList.size();
             for (College college : collegeList) {
-                College existingCollege =  collegeRepository.findByNameAndCampusAndCountry(college.getName(),  college.getCampus(), college.getCountry());
+                College existingCollege =  collegeRepository.findByCampusCode(college.getCampusCode());
                 if(existingCollege != null){
                     college.setId(existingCollege.getId());
+                    college.setCampusCode(existingCollege.getCampusCode());
                     college.setAddress(existingCollege.getAddress());
                     college.setCollegeCourses(existingCollege.getCollegeCourses());
                     college.setSeo(existingCollege.getSeo());
@@ -65,7 +68,7 @@ public class CollegeServiceImpl implements CollegeService {
             college.setAddress(address);
             address.setCollege(college);
             collegeRepository.save(college);
-            return new CollegeResponseDto(college.getId(), college.getName());
+            return new CollegeResponseDto(college.getId(), college.getName(), college.getCampus(), college.getCampusCode());
         }
         catch (Exception e){
             throw new DatabaseException(e.getMessage());
@@ -139,7 +142,7 @@ public class CollegeServiceImpl implements CollegeService {
 
     @Override
     public List<CollegeResponseDto> getCollegeByName(String name) {
-        List<College> colleges = collegeRepository.findByNameContainingIgnoreCase(name, PageRequest.of(0, 5));
+        List<College> colleges = collegeRepository.searchByNameOrCampus(PatternConvert.jumbleSearch(name), PageRequest.of(0, 5));
         if (!colleges.isEmpty()) {
             return CollegeTransformer.toResDTO(colleges);
         }
@@ -174,5 +177,31 @@ public class CollegeServiceImpl implements CollegeService {
             return CollegeCourseTransformer.toResDto(collegeCourses);
         }
         throw new NotFoundException("College not found");
+    }
+
+    @Override
+    public String updateInternalCollegeData() {
+        List<College> collegeList = collegeRepository.findAll();
+        collegeRepository.deleteAll();
+        List<College> updatedCollegeList = new ArrayList<>();
+        int count = 1;
+        for (College college : collegeList) {
+            List<String> campuses = List.of(college.getCampus().split(","));
+            for(String campus : campuses) {
+                College updatedCollege = CollegeTransformer.reqDtoToReqDto(college, campus.trim());
+                if (Objects.equals(updatedCollege.getCountry(), "Australia")) {
+                    updatedCollege.setCampusCode("AUS" + count);
+                } else if (Objects.equals(updatedCollege.getCountry(), "Canada")) {
+                    updatedCollege.setCampusCode("CAN" + count);
+                } else if (Objects.equals(updatedCollege.getCountry(), "United States of America")) {
+                    updatedCollege.setCampusCode("USA" + count);
+                }
+                count++;
+                updatedCollegeList.add(updatedCollege);
+
+            }
+        }
+        collegeRepository.saveAll(updatedCollegeList);
+        return "Updated Successfully";
     }
 }

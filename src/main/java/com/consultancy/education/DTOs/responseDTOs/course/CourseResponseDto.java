@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class CourseResponseDto {
 
-    private Long courseId;
+    private Long id;
 
     private String name;
 
