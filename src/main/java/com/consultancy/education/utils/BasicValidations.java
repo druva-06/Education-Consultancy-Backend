@@ -24,6 +24,7 @@ public class BasicValidations {
     }
 
     public String validateString(Cell cell){
+        if(cell == null) return null;
         if(cell.getCellType() == CellType.STRING) {
             String value = cell.getStringCellValue().trim();
             if(value.isEmpty() || value.equals("NA")) {
@@ -35,6 +36,7 @@ public class BasicValidations {
     }
 
     public Integer validateInteger(Cell cell){
+        if(cell == null) return null;
         if(cell.getCellType() == CellType.NUMERIC) {
             return (int) cell.getNumericCellValue();
         }

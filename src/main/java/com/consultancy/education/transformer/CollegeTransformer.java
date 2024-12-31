@@ -20,22 +20,6 @@ public class CollegeTransformer {
                 .collegeLogo(collegeRequestDto.getCollegeLogo())
                 .establishedYear(collegeRequestDto.getEstablishedYear())
                 .ranking(collegeRequestDto.getRanking())
-                .studyLevel(collegeRequestDto.getStudyLevel())
-                .ieltsMinScore(collegeRequestDto.getIeltsMinScore())
-                .toeflMinScore(collegeRequestDto.getToeflMinScore())
-                .pteMinScore(collegeRequestDto.getPteMinScore())
-                .greMinScore(collegeRequestDto.getGreMinScore())
-                .gmatMinScore(collegeRequestDto.getGmatMinScore())
-                .satMinScore(collegeRequestDto.getSatMinScore())
-                .catMinScore(collegeRequestDto.getCatMinScore())
-                .detMinScore(collegeRequestDto.getDetMinScore())
-                .min10thScore(collegeRequestDto.getMin10thScore())
-                .minInterScore(collegeRequestDto.getMinInterScore())
-                .minGraduationScore(collegeRequestDto.getMinGraduationScore())
-                .scholarshipEligible(collegeRequestDto.getScholarshipEligible())
-                .scholarshipDetails(collegeRequestDto.getScholarshipDetails())
-                .backlogAcceptanceRange(collegeRequestDto.getBacklogAcceptanceRange())
-                .remarks(collegeRequestDto.getRemarks())
                 .description(collegeRequestDto.getDescription())
                 .campusGalleryVideoLink(collegeRequestDto.getCampusGalleryVideoLink())
                 .eligibilityCriteria(collegeRequestDto.getEligibilityCriteria())
@@ -51,23 +35,7 @@ public class CollegeTransformer {
                 .collegeLogo(college.getCollegeLogo())
                 .establishedYear(college.getEstablishedYear())
                 .ranking(college.getRanking())
-                .studyLevel(college.getStudyLevel())
                 .country(college.getCountry())
-                .ieltsMinScore(college.getIeltsMinScore())
-                .toeflMinScore(college.getToeflMinScore())
-                .pteMinScore(college.getPteMinScore())
-                .greMinScore(college.getGreMinScore())
-                .gmatMinScore(college.getGmatMinScore())
-                .satMinScore(college.getSatMinScore())
-                .catMinScore(college.getCatMinScore())
-                .detMinScore(college.getDetMinScore())
-                .min10thScore(college.getMin10thScore())
-                .minInterScore(college.getMinInterScore())
-                .minGraduationScore(college.getMinGraduationScore())
-                .scholarshipEligible(college.getScholarshipEligible())
-                .scholarshipDetails(college.getScholarshipDetails())
-                .backlogAcceptanceRange(college.getBacklogAcceptanceRange())
-                .remarks(college.getRemarks())
                 .description(college.getDescription())
                 .campusGalleryVideoLink(college.getCampusGalleryVideoLink())
                 .eligibilityCriteria(college.getEligibilityCriteria())
@@ -100,26 +68,21 @@ public class CollegeTransformer {
         existingCollege.setCollegeLogo(collegeRequestDto.getCollegeLogo());
         existingCollege.setEstablishedYear(collegeRequestDto.getEstablishedYear());
         existingCollege.setRanking(collegeRequestDto.getRanking());
-        existingCollege.setStudyLevel(collegeRequestDto.getStudyLevel());
-        existingCollege.setIeltsMinScore(collegeRequestDto.getIeltsMinScore());
-        existingCollege.setToeflMinScore(collegeRequestDto.getToeflMinScore());
-        existingCollege.setPteMinScore(collegeRequestDto.getPteMinScore());
-        existingCollege.setGreMinScore(collegeRequestDto.getGreMinScore());
-        existingCollege.setGmatMinScore(collegeRequestDto.getGmatMinScore());
-        existingCollege.setSatMinScore(collegeRequestDto.getSatMinScore());
-        existingCollege.setCatMinScore(collegeRequestDto.getCatMinScore());
-        existingCollege.setDetMinScore(collegeRequestDto.getDetMinScore());
-        existingCollege.setMin10thScore(collegeRequestDto.getMin10thScore());
-        existingCollege.setMinInterScore(collegeRequestDto.getMinInterScore());
-        existingCollege.setMinGraduationScore(collegeRequestDto.getMinGraduationScore());
-        existingCollege.setScholarshipEligible(collegeRequestDto.getScholarshipEligible());
-        existingCollege.setScholarshipDetails(collegeRequestDto.getScholarshipDetails());
-        existingCollege.setBacklogAcceptanceRange(collegeRequestDto.getBacklogAcceptanceRange());
-        existingCollege.setRemarks(collegeRequestDto.getRemarks());
         existingCollege.setDescription(collegeRequestDto.getDescription());
         existingCollege.setCampusGalleryVideoLink(collegeRequestDto.getCampusGalleryVideoLink());
         existingCollege.setEligibilityCriteria(collegeRequestDto.getEligibilityCriteria());
     }
+
+    public static void updateCollegeDetailsEntityToEntity(College existingCollege, College college) {
+        existingCollege.setWebsiteUrl(college.getWebsiteUrl());
+        existingCollege.setCollegeLogo(college.getCollegeLogo());
+        existingCollege.setEstablishedYear(college.getEstablishedYear());
+        existingCollege.setRanking(college.getRanking());
+        existingCollege.setDescription(college.getDescription());
+        existingCollege.setCampusGalleryVideoLink(college.getCampusGalleryVideoLink());
+        existingCollege.setEligibilityCriteria(college.getEligibilityCriteria());
+    }
+
 
     public static College reqDtoToReqDto(College college, String campus) {
         return College.builder()
@@ -130,22 +93,6 @@ public class CollegeTransformer {
                 .country(college.getCountry())
                 .establishedYear(college.getEstablishedYear())
                 .ranking(college.getRanking())
-                .studyLevel(college.getStudyLevel())
-                .ieltsMinScore(college.getIeltsMinScore())
-                .toeflMinScore(college.getToeflMinScore())
-                .pteMinScore(college.getPteMinScore())
-                .greMinScore(college.getGreMinScore())
-                .gmatMinScore(college.getGmatMinScore())
-                .satMinScore(college.getSatMinScore())
-                .catMinScore(college.getCatMinScore())
-                .detMinScore(college.getDetMinScore())
-                .min10thScore(college.getMin10thScore())
-                .minInterScore(college.getMinInterScore())
-                .minGraduationScore(college.getMinGraduationScore())
-                .scholarshipEligible(college.getScholarshipEligible())
-                .scholarshipDetails(college.getScholarshipDetails())
-                .backlogAcceptanceRange(college.getBacklogAcceptanceRange())
-                .remarks(college.getRemarks())
                 .description(college.getDescription())
                 .campusGalleryVideoLink(college.getCampusGalleryVideoLink())
                 .eligibilityCriteria(college.getEligibilityCriteria())

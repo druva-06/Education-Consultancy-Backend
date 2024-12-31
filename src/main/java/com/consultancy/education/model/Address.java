@@ -60,9 +60,6 @@ public class Address {
     @ManyToOne
     Student student;
 
-    @JoinColumn
-    @OneToOne
-    College college;
 
     @PrePersist
     protected void onCreate() {

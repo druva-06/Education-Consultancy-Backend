@@ -14,7 +14,7 @@ public interface CollegeService {
 
     String bulkCollegesUpload(MultipartFile file);
 
-    CollegeResponseDto add(CollegeAndAddressRequestDto collegeAndAddressRequestDto);
+    CollegeResponseDto add(CollegeRequestDto collegeRequestDto);
 
     List<CollegeResponseDto> getColleges();
 

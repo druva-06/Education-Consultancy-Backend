@@ -45,4 +45,9 @@ public class CourseTransformer {
         course.setSpecialization(courseRequestDto.getSpecialization());
         course.setDescription(courseRequestDto.getDescription());
     }
+
+    public static void updateCourseDetailsEntityToEntity(Course existingCourse, Course course) {
+        existingCourse.setDescription(course.getDescription());
+        existingCourse.setSpecialization(course.getSpecialization());
+    }
 }

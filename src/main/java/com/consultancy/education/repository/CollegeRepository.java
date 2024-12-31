@@ -13,7 +13,8 @@ import java.util.List;
 
 @Repository
 public interface CollegeRepository extends JpaRepository<College, Long> {
-    List<College> findByAddress_CountryIn(List<String> countries);
+
+    College findByNameAndCampusAndCountry(String name, String campus, String country);
 
     List<College> findByNameContainingIgnoreCase(String name, Pageable pageable);
 

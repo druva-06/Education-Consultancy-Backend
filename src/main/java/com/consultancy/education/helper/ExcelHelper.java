@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ExcelHelper {
 
@@ -56,19 +57,20 @@ public class ExcelHelper {
 
         try{
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-            XSSFSheet courseSheet = workbook.getSheet("courses");
-            Iterator<Row> courses = courseSheet.iterator();
-            int row = 0;
-            while(courses.hasNext()){
-                Row courseRow = courses.next();
-                if(row == 0){
+            for(int i=0; i< workbook.getNumberOfSheets(); i++){
+                XSSFSheet sheet = workbook.getSheetAt(i);
+                Iterator<Row> courses = sheet.iterator();
+                int row = 0;
+                while(courses.hasNext()){
+                    Row courseRow = courses.next();
+                    if(row == 0){
+                        row++;
+                        continue;
+                    }
                     row++;
-                    continue;
+                    Course course = getCourse(courseRow);
+                    courseArrayList.add(course);
                 }
-                row++;
-                Course course = getCourse(courseRow);
-                if(course.getName() == null) break;
-                courseArrayList.add(course);
             }
         }
         catch (Exception e){
@@ -83,18 +85,19 @@ public class ExcelHelper {
         int col = 0;
         Course course = new Course();
         for (Cell cell : courseRow) {
+            cell = courseRow.getCell(col, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
             switch (col){
                 case 0:
                     course.setName(basicValidations.validateString(cell));
                     break;
                 case 1:
-                    course.setDepartment(basicValidations.validateString(cell));
+                    course.setSpecialization(basicValidations.validateString(cell));
                     break;
                 case 2:
-                    course.setGraduationLevel(GraduationLevel.valueOf(basicValidations.validateString(cell)));
+                    course.setDepartment(basicValidations.validateString(cell));
                     break;
                 case 3:
-                    course.setSpecialization(basicValidations.validateString(cell));
+                    course.setGraduationLevel(GraduationLevel.valueOf(basicValidations.validateString(cell).toUpperCase()));
                     break;
                 case 4:
                     course.setDescription(basicValidations.validateString(cell));
@@ -112,6 +115,7 @@ public class ExcelHelper {
         int col = 0;
         College college = new College();
         for (Cell cell : collegeRow) {
+            cell = collegeRow.getCell(col, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
             switch (col){
                 case 0:
                     college.setName(basicValidations.validateString(cell));
@@ -120,75 +124,30 @@ public class ExcelHelper {
                     college.setCampus(basicValidations.validateString(cell));
                     break;
                 case 2:
-                    college.setWebsiteUrl(basicValidations.validateString(cell));
+                    college.setCampusCode(basicValidations.validateString(cell));
                     break;
                 case 3:
-                    college.setCollegeLogo(basicValidations.validateString(cell));
+                    college.setWebsiteUrl(basicValidations.validateString(cell));
                     break;
                 case 4:
-                    college.setCountry(basicValidations.validateString(cell));
+                    college.setCollegeLogo(basicValidations.validateString(cell));
                     break;
                 case 5:
-                    college.setEstablishedYear(basicValidations.validateInteger(cell));
+                    college.setCountry(basicValidations.validateString(cell));
                     break;
                 case 6:
-                    college.setRanking(basicValidations.validateInteger(cell));
+                    college.setEstablishedYear(basicValidations.validateInteger(cell));
                     break;
                 case 7:
-                    college.setStudyLevel(basicValidations.validateString(cell));
+                    college.setRanking(basicValidations.validateInteger(cell));
                     break;
                 case 8:
-                    college.setIeltsMinScore(basicValidations.validateDouble(cell));
-                    break;
-                case 9:
-                    college.setToeflMinScore(basicValidations.validateDouble(cell));
-                    break;
-                case 10:
-                    college.setPteMinScore(basicValidations.validateDouble(cell));
-                    break;
-                case 11:
-                    college.setGreMinScore(basicValidations.validateDouble(cell));
-                    break;
-                case 12:
-                    college.setGmatMinScore(basicValidations.validateDouble(cell));
-                    break;
-                case 13:
-                    college.setSatMinScore(basicValidations.validateDouble(cell));
-                    break;
-                case 14:
-                    college.setCatMinScore(basicValidations.validateDouble(cell));
-                    break;
-                case 15:
-                    college.setDetMinScore(basicValidations.validateDouble(cell));
-                    break;
-                case 16:
-                    college.setMin10thScore(basicValidations.validateDouble(cell));
-                    break;
-                case 17:
-                    college.setMinInterScore(basicValidations.validateDouble(cell));
-                    break;
-                case 18:
-                    college.setMinGraduationScore(basicValidations.validateDouble(cell));
-                    break;
-                case 19:
-                    college.setScholarshipEligible(basicValidations.validateString(cell));
-                    break;
-                case 20:
-                    college.setScholarshipDetails(basicValidations.validateString(cell));
-                    break;
-                case 21:
-                    college.setBacklogAcceptanceRange(basicValidations.validateInteger(cell));
-                    break;
-                case 22:
-                    college.setRemarks(basicValidations.validateString(cell));
-                    break;
-                case 23:
                     college.setDescription(basicValidations.validateString(cell));
                     break;
-                case 24:
+                case 9:
                     college.setCampusGalleryVideoLink(basicValidations.validateString(cell));
                     break;
-                case 25:
+                case 10:
                     college.setEligibilityCriteria(basicValidations.validateString(cell));
                     break;
                 default:

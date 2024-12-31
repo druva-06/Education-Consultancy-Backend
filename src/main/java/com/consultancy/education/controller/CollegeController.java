@@ -34,12 +34,12 @@ public class CollegeController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addCollege(@RequestBody @Valid CollegeAndAddressRequestDto collegeAndAddressRequestDto, BindingResult bindingResult) {
+    public ResponseEntity<?> addCollege(@RequestBody @Valid CollegeRequestDto collegeRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiFailureResponse<>(ToMap.bindingResultToMap(bindingResult), "Validation Failed", 400));
         }
         try{
-            CollegeResponseDto collegeResponseDto = collegeService.add(collegeAndAddressRequestDto);
+            CollegeResponseDto collegeResponseDto = collegeService.add(collegeRequestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(new ApiSuccessResponse<>(collegeResponseDto,"College created successfully", 201));
         }
         catch(Exception e){

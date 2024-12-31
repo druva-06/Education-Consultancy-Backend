@@ -11,7 +11,7 @@ public class CollegeCourseTransformer {
 
     public static CollegeCourse toEntity(CollegeCourseRequestDto collegeCourseRequestDto) {
         return CollegeCourse.builder()
-                .intakeMonth(collegeCourseRequestDto.getIntakeMonth())
+                //.intakeMonth(collegeCourseRequestDto.getIntakeMonth())
                 .intakeYear(collegeCourseRequestDto.getIntakeYear())
                 .tuitionFee(collegeCourseRequestDto.getTuitionFee())
                 .applicationFee(collegeCourseRequestDto.getApplicationFee())
@@ -27,7 +27,7 @@ public class CollegeCourseTransformer {
                 .collegeCourseId(collegeCourseId)
                 .collegeName(collegeName)
                 .courseName(courseName)
-                .intakeMonth(collegeCourse.getIntakeMonth())
+                //.intakeMonth(collegeCourse.getIntakeMonth())
                 .intakeYear(collegeCourse.getIntakeYear())
                 .tuitionFee(collegeCourse.getTuitionFee())
                 .applicationFee(collegeCourse.getApplicationFee())
@@ -47,7 +47,7 @@ public class CollegeCourseTransformer {
     }
 
     public static void updateCollegeCourse(CollegeCourse collegeCourse, CollegeCourseRequestDto collegeCourseRequestDto) {
-        collegeCourse.setIntakeMonth(collegeCourseRequestDto.getIntakeMonth());
+        //collegeCourse.setIntakeMonth(collegeCourseRequestDto.getIntakeMonth());
         collegeCourse.setIntakeYear(collegeCourseRequestDto.getIntakeYear());
         collegeCourse.setTuitionFee(collegeCourseRequestDto.getTuitionFee());
         collegeCourse.setApplicationFee(collegeCourseRequestDto.getApplicationFee());

@@ -1,6 +1,7 @@
 package com.consultancy.education.model;
 
 import com.consultancy.education.enums.CollegeCourseStatus;
+import com.consultancy.education.enums.Month;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,8 +23,11 @@ public class CollegeCourse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "intake_month", nullable = false)
-    Integer intakeMonth;
+    @ElementCollection(targetClass = Month.class)
+    @CollectionTable(name = "course_intake_months", joinColumns = @JoinColumn(name = "course_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "intake_months", nullable = false)
+    List<Month> intakeMonths;
 
     @Column(name = "intake_year", nullable = false)
     Integer intakeYear;
@@ -47,6 +51,60 @@ public class CollegeCourse {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     CollegeCourseStatus status;
+
+    @Column(name = "study_level", nullable = false)
+    String studyLevel;
+
+    @Column(name = "ielts_min_score")
+    Double ieltsMinScore;
+
+    @Column(name = "ielts_min_band_score")
+    Double ieltsMinBandScore;
+
+    @Column(name = "toefl_min_score")
+    Double toeflMinScore;
+
+    @Column(name = "toefl_min_band_score")
+    Double toeflMinBandScore;
+
+    @Column(name = "pte_min_band_score")
+    Double pteMinBandScore;
+
+    @Column(name = "gre_min_score")
+    Double greMinScore;
+
+    @Column(name = "gmat_min_score")
+    Double gmatMinScore;
+
+    @Column(name = "sat_min_score")
+    Double satMinScore;
+
+    @Column(name = "cat_min_score")
+    Double catMinScore;
+
+    @Column(name = "det_min_score")
+    Double detMinScore;
+
+    @Column(name = "min_10th_score")
+    Double min10thScore;
+
+    @Column(name = "min_inter_score")
+    Double minInterScore;
+
+    @Column(name = "min_graduation_score")
+    Double minGraduationScore;
+
+    @Column(name = "scholarship_eligible")
+    String scholarshipEligible;
+
+    @Column(length = 3000, name = "scholarship_details")
+    String scholarshipDetails;
+
+    @Column(name = "backlog_acceptance_range")
+    Integer backlogAcceptanceRange;
+
+    @Column(length = 3000, name = "remarks")
+    String remarks;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     LocalDateTime createdAt;

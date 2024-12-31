@@ -6,12 +6,12 @@ import com.consultancy.education.exception.AlreadyExistException;
 import com.consultancy.education.exception.DatabaseException;
 import com.consultancy.education.exception.NotFoundException;
 import com.consultancy.education.helper.ExcelHelper;
-import com.consultancy.education.model.College;
 import com.consultancy.education.model.Course;
 import com.consultancy.education.repository.CourseRepository;
 import com.consultancy.education.service.CourseService;
 import com.consultancy.education.transformer.CourseTransformer;
 import com.consultancy.education.utils.PatternConvert;
+import com.consultancy.education.validations.CourseValidations;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,25 +105,30 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public String bulkCoursesUpload(MultipartFile file) {
-        int courseCount;
-        int updatedCount = 0;
+        int updatedCourseCount = 0;
+        int newCourseCount = 0;
         try{
             List<Course> courseList = ExcelHelper.convertCourseExcelIntoList(file.getInputStream());
-            courseCount = courseList.size();
             for (Course course : courseList) {
                 Course existingCourse =  courseRepository.findByNameAndDepartmentAndGraduationLevel(course.getName(),  course.getDepartment(), course.getGraduationLevel());
                 if(existingCourse != null){
-                    course.setId(existingCourse.getId());
-                    course.setCollegeCourses(existingCourse.getCollegeCourses());
-                    updatedCount++;
+                    if(CourseValidations.validateCourseData(existingCourse, course)){
+                        continue;
+                    }
+                    CourseTransformer.updateCourseDetailsEntityToEntity(existingCourse, course);
+                    courseRepository.save(existingCourse);
+                    updatedCourseCount++;
                 }
-                courseRepository.save(course);
+                else{
+                    courseRepository.save(course);
+                    newCourseCount++;
+                }
             }
         }
         catch (Exception e){
             throw new DatabaseException(e.getMessage());
         }
-        return "Created Courses Count : " + (courseCount - updatedCount) + " & Updated Courses Count : " + updatedCount;
+        return "Created Courses Count : " + newCourseCount + " & Updated Courses Count : " + updatedCourseCount;
 
     }
 }
