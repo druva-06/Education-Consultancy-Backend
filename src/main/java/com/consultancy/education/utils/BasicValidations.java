@@ -44,6 +44,7 @@ public class BasicValidations {
     }
 
     public Double validateDouble(Cell cell){
+        if(cell == null) return null;
         if(cell.getCellType() == CellType.NUMERIC) {
             return cell.getNumericCellValue();
         }

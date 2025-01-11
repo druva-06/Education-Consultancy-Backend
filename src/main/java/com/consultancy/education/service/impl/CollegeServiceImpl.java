@@ -172,15 +172,15 @@ public class CollegeServiceImpl implements CollegeService {
         return CollegeTransformer.toResDTO(colleges);
     }
 
-    @Override
-    public List<CollegeCourseResponseDto> getCollegeCourses(Long collegeId) {
-        if(collegeRepository.findById(collegeId).isPresent()){
-            College college = collegeRepository.findById(collegeId).get();
-            List<CollegeCourse> collegeCourses = college.getCollegeCourses();
-            return CollegeCourseTransformer.toResDto(collegeCourses);
-        }
-        throw new NotFoundException("College not found");
-    }
+//    @Override
+//    public List<CollegeCourseResponseDto> getCollegeCourses(Long collegeId) {
+//        if(collegeRepository.findById(collegeId).isPresent()){
+//            College college = collegeRepository.findById(collegeId).get();
+//            List<CollegeCourse> collegeCourses = college.getCollegeCourses();
+//            return CollegeCourseTransformer.toResDto(collegeCourses);
+//        }
+//        throw new NotFoundException("College not found");
+//    }
 
     @Override
     public String updateInternalCollegeData() {

@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,9 +51,6 @@ public class College {
     @Column(name = "campus_gallery_video_link")
     String campusGalleryVideoLink;
 
-    @Column(name = "eligibility_criteria")
-    String eligibilityCriteria;
-
     @Column(name = "created_at", nullable = false, updatable = false)
     LocalDateTime createdAt;
 
@@ -64,7 +62,7 @@ public class College {
     Seo seo;
 
     @OneToMany(mappedBy = "college", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<CollegeCourse> collegeCourses;
+    List<CollegeCourse> collegeCourses = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

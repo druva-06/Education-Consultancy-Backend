@@ -1,5 +1,6 @@
 package com.consultancy.education.helper;
 
+import com.consultancy.education.DTOs.requestDTOs.collegeCourse.CollegeCourseRequestExcelDto;
 import com.consultancy.education.enums.GraduationLevel;
 import com.consultancy.education.exception.ExcelException;
 import com.consultancy.education.model.College;
@@ -15,7 +16,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class ExcelHelper {
 
@@ -50,6 +50,33 @@ public class ExcelHelper {
         }
 
         return collegeArrayList;
+    }
+
+    public static List<CollegeCourseRequestExcelDto> convertCollegeCourseExcelIntoList(InputStream inputStream) throws Exception {
+        List<CollegeCourseRequestExcelDto> collegeCourseRequestExcelDtos = new ArrayList<>();
+
+        try{
+            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+            XSSFSheet collegeSheet = workbook.getSheet("colleges");
+            Iterator<Row> colleges = collegeSheet.iterator();
+            int row = 0;
+            while(colleges.hasNext()){
+                Row collegeRow = colleges.next();
+                if(row == 0){
+                    row++;
+                    continue;
+                }
+                row++;
+                CollegeCourseRequestExcelDto collegeCourseRequestExcelDto = getCollegeCourse(collegeRow);
+                if(collegeCourseRequestExcelDto.getCourseName() == null) break;
+                collegeCourseRequestExcelDtos.add(collegeCourseRequestExcelDto);
+            }
+        }
+        catch (Exception e){
+            throw new ExcelException(e.getMessage());
+        }
+
+        return collegeCourseRequestExcelDtos;
     }
 
     public static List<Course> convertCourseExcelIntoList(InputStream inputStream) throws Exception {
@@ -147,14 +174,114 @@ public class ExcelHelper {
                 case 9:
                     college.setCampusGalleryVideoLink(basicValidations.validateString(cell));
                     break;
-                case 10:
-                    college.setEligibilityCriteria(basicValidations.validateString(cell));
-                    break;
                 default:
                     break;
             }
             col++;
         }
         return college;
+    }
+
+    private static CollegeCourseRequestExcelDto getCollegeCourse(Row collegeRow) {
+        BasicValidations basicValidations = new BasicValidations();
+        CollegeCourseRequestExcelDto collegeCourseRequestExcelDto = new CollegeCourseRequestExcelDto();
+        for (int col = 0; col < collegeRow.getLastCellNum(); col++) {
+            Cell cell = collegeRow.getCell(col, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+            switch (col){
+                case 0:
+                    collegeCourseRequestExcelDto.setCollegeName(basicValidations.validateString(cell));
+                    break;
+                case 1:
+                    collegeCourseRequestExcelDto.setCampus(basicValidations.validateString(cell));
+                    break;
+                case 5:
+                    collegeCourseRequestExcelDto.setCountry(basicValidations.validateString(cell));
+                    break;
+                case 10:
+                    collegeCourseRequestExcelDto.setCourseName(basicValidations.validateString(cell));
+                    break;
+                case 11:
+                    collegeCourseRequestExcelDto.setGraduationLevel(basicValidations.validateString(cell));
+                    break;
+                case 12:
+                    collegeCourseRequestExcelDto.setCourseUrl(basicValidations.validateString(cell));
+                    break;
+                case 13:
+                    collegeCourseRequestExcelDto.setDuration(basicValidations.validateString(cell));
+                    break;
+                case 14:
+                    collegeCourseRequestExcelDto.setIntakeMonths(basicValidations.validateString(cell));
+                    break;
+                case 15:
+                    collegeCourseRequestExcelDto.setIntakeYear(basicValidations.validateInteger(cell));
+                    break;
+                case 16:
+                    collegeCourseRequestExcelDto.setEligibilityCriteria(basicValidations.validateString(cell));
+                    break;
+                case 17:
+                    collegeCourseRequestExcelDto.setApplicationFee(basicValidations.validateString(cell));
+                    break;
+                case 18:
+                    collegeCourseRequestExcelDto.setTuitionFee(basicValidations.validateString(cell));
+                    break;
+                case 19:
+                    collegeCourseRequestExcelDto.setIeltsMinScore(basicValidations.validateDouble(cell));
+                    break;
+                case 20:
+                    collegeCourseRequestExcelDto.setIeltsMinBandScore(basicValidations.validateDouble(cell));
+                    break;
+                case 21:
+                    collegeCourseRequestExcelDto.setToeflMinScore(basicValidations.validateDouble(cell));
+                    break;
+                case 22:
+                    collegeCourseRequestExcelDto.setToeflMinBandScore(basicValidations.validateDouble(cell));
+                    break;
+                case 23:
+                    collegeCourseRequestExcelDto.setPteMinScore(basicValidations.validateDouble(cell));
+                    break;
+                case 24:
+                    collegeCourseRequestExcelDto.setPteMinBandScore(basicValidations.validateDouble(cell));
+                    break;
+                case 25:
+                    collegeCourseRequestExcelDto.setDetMinScore(basicValidations.validateDouble(cell));
+                    break;
+                case 26:
+                    collegeCourseRequestExcelDto.setGreMinScore(basicValidations.validateDouble(cell));
+                    break;
+                case 27:
+                    collegeCourseRequestExcelDto.setGmatMinScore(basicValidations.validateDouble(cell));
+                    break;
+                case 28:
+                    collegeCourseRequestExcelDto.setSatMinScore(basicValidations.validateDouble(cell));
+                    break;
+                case 29:
+                    collegeCourseRequestExcelDto.setCatMinScore(basicValidations.validateDouble(cell));
+                    break;
+                case 30:
+                    collegeCourseRequestExcelDto.setMin10thScore(basicValidations.validateString(cell));
+                    break;
+                case 31:
+                    collegeCourseRequestExcelDto.setMinInterScore(basicValidations.validateString(cell));
+                    break;
+                case 32:
+                    collegeCourseRequestExcelDto.setMinGraduationScore(basicValidations.validateString(cell));
+                    break;
+                case 33:
+                    collegeCourseRequestExcelDto.setScholarshipEligible(basicValidations.validateString(cell));
+                    break;
+                case 34:
+                    collegeCourseRequestExcelDto.setScholarshipDetails(basicValidations.validateString(cell));
+                    break;
+                case 35:
+                    collegeCourseRequestExcelDto.setBacklogAcceptanceRange(basicValidations.validateString(cell));
+                    break;
+                case 36:
+                    collegeCourseRequestExcelDto.setRemarks(basicValidations.validateString(cell));
+                    break;
+                default:
+                    break;
+            }
+        }
+        return collegeCourseRequestExcelDto;
     }
 }

@@ -163,19 +163,19 @@ public class CollegeController {
         }
     }
 
-    @GetMapping("/getCollegeCourses/{collegeId}")
-    public ResponseEntity<?> getCollegeCourses(@PathVariable Long collegeId){
-        try{
-            List<CollegeCourseResponseDto> collegeCourseResponseDtos = collegeService.getCollegeCourses(collegeId);
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiSuccessResponse<>(collegeCourseResponseDtos, "College courses fetched successfully", 200));
-        }
-        catch (NotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiFailureResponse<>(new ArrayList<>(),e.getMessage(), 404));
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiFailureResponse<>(new ArrayList<>(),e.getMessage(), 500));
-        }
-    }
+//    @GetMapping("/getCollegeCourses/{collegeId}")
+//    public ResponseEntity<?> getCollegeCourses(@PathVariable Long collegeId){
+//        try{
+//            List<CollegeCourseResponseDto> collegeCourseResponseDtos = collegeService.getCollegeCourses(collegeId);
+//            return ResponseEntity.status(HttpStatus.OK).body(new ApiSuccessResponse<>(collegeCourseResponseDtos, "College courses fetched successfully", 200));
+//        }
+//        catch (NotFoundException e){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiFailureResponse<>(new ArrayList<>(),e.getMessage(), 404));
+//        }
+//        catch (Exception e){
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiFailureResponse<>(new ArrayList<>(),e.getMessage(), 500));
+//        }
+//    }
 
     @GetMapping("updateInternalCollegeData")
     public ResponseEntity<?> updateCollegeData(){

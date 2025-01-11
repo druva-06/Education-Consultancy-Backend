@@ -1,12 +1,10 @@
 package com.consultancy.education.DTOs.responseDTOs.collegeCourse;
 
 import com.consultancy.education.enums.CollegeCourseStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.consultancy.education.enums.Month;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,17 +12,9 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 public class CollegeCourseResponseDto {
-
     Long collegeCourseId;
+    Long collegeId;
+    Long courseId;
     String collegeName;
     String courseName;
-    Integer intakeMonth;
-    Integer intakeYear;
-    Double tuitionFee;
-    Double applicationFee;
-    String duration;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    LocalDate applicationDeadline;
-    Integer maxStudents;
-    CollegeCourseStatus status;
 }

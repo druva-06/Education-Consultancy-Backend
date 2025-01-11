@@ -32,7 +32,7 @@ public interface CollegeService {
 
     List<CollegeResponseDto> sortCollegeByName(String type);
 
-    List<CollegeCourseResponseDto> getCollegeCourses(Long collegeId);
+    //List<CollegeCourseResponseDto> getCollegeCourses(Long collegeId);
 
     String updateInternalCollegeData();
 }

@@ -1,14 +1,11 @@
 package com.consultancy.education.model;
 
-import com.consultancy.education.enums.CollegeCourseStatus;
 import com.consultancy.education.enums.Month;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,6 +20,12 @@ public class CollegeCourse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name = "course_url", columnDefinition = "TEXT")
+    String courseUrl;
+
+    @Column(name = "duration", nullable = false)
+    Integer duration;
+
     @ElementCollection(targetClass = Month.class)
     @CollectionTable(name = "course_intake_months", joinColumns = @JoinColumn(name = "course_id"))
     @Enumerated(EnumType.STRING)
@@ -32,28 +35,14 @@ public class CollegeCourse {
     @Column(name = "intake_year", nullable = false)
     Integer intakeYear;
 
+    @Column(name = "eligibility_criteria", columnDefinition = "TEXT")
+    String eligibilityCriteria;
+
+    @Column(name = "application_fee", columnDefinition = "TEXT")
+    String applicationFee;
+
     @Column(name = "tuition_fee")
     Double tuitionFee;
-
-    @Column(name = "application_fee")
-    Double applicationFee;
-
-    @Column(name = "duration", nullable = false)
-    String duration;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @Column(name = "application_deadline")
-    LocalDate applicationDeadline;
-
-    @Column(name = "max_students")
-    Integer maxStudents;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    CollegeCourseStatus status;
-
-    @Column(name = "study_level", nullable = false)
-    String studyLevel;
 
     @Column(name = "ielts_min_score")
     Double ieltsMinScore;
@@ -67,8 +56,14 @@ public class CollegeCourse {
     @Column(name = "toefl_min_band_score")
     Double toeflMinBandScore;
 
+    @Column(name = "pte_min_score")
+    Double pteMinScore;
+
     @Column(name = "pte_min_band_score")
     Double pteMinBandScore;
+
+    @Column(name = "det_min_score")
+    Double detMinScore;
 
     @Column(name = "gre_min_score")
     Double greMinScore;
@@ -82,9 +77,6 @@ public class CollegeCourse {
     @Column(name = "cat_min_score")
     Double catMinScore;
 
-    @Column(name = "det_min_score")
-    Double detMinScore;
-
     @Column(name = "min_10th_score")
     Double min10thScore;
 
@@ -94,16 +86,16 @@ public class CollegeCourse {
     @Column(name = "min_graduation_score")
     Double minGraduationScore;
 
-    @Column(name = "scholarship_eligible")
+    @Column(name = "scholarship_eligible", columnDefinition = "TEXT")
     String scholarshipEligible;
 
-    @Column(length = 3000, name = "scholarship_details")
+    @Column(name = "scholarship_details", columnDefinition = "TEXT")
     String scholarshipDetails;
 
-    @Column(name = "backlog_acceptance_range")
-    Integer backlogAcceptanceRange;
+    @Column(name = "backlog_acceptance_range", columnDefinition = "TEXT")
+    String backlogAcceptanceRange;
 
-    @Column(length = 3000, name = "remarks")
+    @Column(name = "remarks", columnDefinition = "TEXT")
     String remarks;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -121,7 +113,7 @@ public class CollegeCourse {
     Course course;
 
     @OneToMany(mappedBy = "collegeCourse", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<StudentCollegeCourseRegistration> studentCollegeCourseRegistrations;
+    List<StudentCollegeCourseRegistration> studentCollegeCourseRegistrations = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

@@ -1,6 +1,6 @@
 package com.consultancy.education.enums;
 
 public enum Month {
-    JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE,
-    JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
+    JAN, FEB, MAR, APR, MAY, JUN,
+    JUL, AUG, SEP, OCT, NOV, DEC
 }

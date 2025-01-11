@@ -14,7 +14,6 @@ public class CollegeValidations {
                     Objects.equals(existingCollege.getCollegeLogo(), college.getCollegeLogo()) &&
                     Objects.equals(existingCollege.getCampusGalleryVideoLink(), college.getCampusGalleryVideoLink()) &&
                     Objects.equals(existingCollege.getDescription(), college.getDescription()) &&
-                    Objects.equals(existingCollege.getEligibilityCriteria(), college.getEligibilityCriteria()) &&
                     Objects.equals(existingCollege.getEstablishedYear(), college.getEstablishedYear()) &&
                     Objects.equals(existingCollege.getRanking(), college.getRanking());
         }

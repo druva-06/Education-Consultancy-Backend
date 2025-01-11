@@ -1,13 +1,22 @@
 package com.consultancy.education.service;
 
-import com.consultancy.education.DTOs.requestDTOs.collegeCourse.CollegeCourseRequestDto;
+import com.consultancy.education.DTOs.requestDTOs.collegeCourse.CollegeCourseRequestExcelDto;
+import com.consultancy.education.DTOs.requestDTOs.search.SearchRequestDto;
 import com.consultancy.education.DTOs.responseDTOs.collegeCourse.CollegeCourseResponseDto;
+import com.consultancy.education.DTOs.responseDTOs.search.SearchResponseDto;
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface CollegeCourseService {
-    CollegeCourseResponseDto addCollegeCourse(CollegeCourseRequestDto collegeCourseRequestDto, Long collegeId, Long courseId);
+    String bulkCollegeCourseUpload(MultipartFile file);
 
-    CollegeCourseResponseDto updateCollegeCourse(@Valid CollegeCourseRequestDto collegeCourseRequestDto, Long collegeCourseId);
+    SearchResponseDto<CollegeCourseResponseDto> getCollegeCourses(SearchRequestDto searchRequestDto);
 
-    CollegeCourseResponseDto deleteCollegeCourse(Long collegeCourseId);
+//    CollegeCourseResponseDto addCollegeCourse(CollegeCourseRequestExcelDto collegeCourseRequestExcelDto, Long collegeId, Long courseId);
+//
+//    CollegeCourseResponseDto updateCollegeCourse(@Valid CollegeCourseRequestExcelDto collegeCourseRequestExcelDto, Long collegeCourseId);
+//
+//    CollegeCourseResponseDto deleteCollegeCourse(Long collegeCourseId);
 }

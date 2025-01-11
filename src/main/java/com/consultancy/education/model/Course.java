@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -44,7 +45,7 @@ public class Course {
     LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<CollegeCourse> collegeCourses;
+    List<CollegeCourse> collegeCourses = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

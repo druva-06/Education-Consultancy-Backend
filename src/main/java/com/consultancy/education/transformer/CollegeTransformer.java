@@ -22,7 +22,6 @@ public class CollegeTransformer {
                 .ranking(collegeRequestDto.getRanking())
                 .description(collegeRequestDto.getDescription())
                 .campusGalleryVideoLink(collegeRequestDto.getCampusGalleryVideoLink())
-                .eligibilityCriteria(collegeRequestDto.getEligibilityCriteria())
                 .build();
     }
 
@@ -38,7 +37,6 @@ public class CollegeTransformer {
                 .country(college.getCountry())
                 .description(college.getDescription())
                 .campusGalleryVideoLink(college.getCampusGalleryVideoLink())
-                .eligibilityCriteria(college.getEligibilityCriteria())
                 .build();
     }
 
@@ -70,7 +68,6 @@ public class CollegeTransformer {
         existingCollege.setRanking(collegeRequestDto.getRanking());
         existingCollege.setDescription(collegeRequestDto.getDescription());
         existingCollege.setCampusGalleryVideoLink(collegeRequestDto.getCampusGalleryVideoLink());
-        existingCollege.setEligibilityCriteria(collegeRequestDto.getEligibilityCriteria());
     }
 
     public static void updateCollegeDetailsEntityToEntity(College existingCollege, College college) {
@@ -80,7 +77,6 @@ public class CollegeTransformer {
         existingCollege.setRanking(college.getRanking());
         existingCollege.setDescription(college.getDescription());
         existingCollege.setCampusGalleryVideoLink(college.getCampusGalleryVideoLink());
-        existingCollege.setEligibilityCriteria(college.getEligibilityCriteria());
     }
 
 
@@ -95,7 +91,6 @@ public class CollegeTransformer {
                 .ranking(college.getRanking())
                 .description(college.getDescription())
                 .campusGalleryVideoLink(college.getCampusGalleryVideoLink())
-                .eligibilityCriteria(college.getEligibilityCriteria())
                 .build();
     }
 }

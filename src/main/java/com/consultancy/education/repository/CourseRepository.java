@@ -22,4 +22,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> searchByNameOrDepartment(@Param("input") String input, PageRequest of);
 
     Course findByNameAndDepartmentAndGraduationLevel(String name, String department, GraduationLevel graduationLevel);
+
+    List<Course> findByNameAndGraduationLevel(String name, GraduationLevel graduationLevel);
 }

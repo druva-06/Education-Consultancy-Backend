@@ -40,6 +40,4 @@ public class CollegeRequestDto {
     String description;
 
     String campusGalleryVideoLink;
-
-    String eligibilityCriteria;
 }
